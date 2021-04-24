@@ -8,9 +8,9 @@ namespace KasJam.LD48.Unity.Behaviours.Music
         HarmonicMinor = 3,
         MelodicMinor = 4,
         Dorian = 5,
-        PentatonicMajor = 10,
-        PentatonicMinor = 11,
-        PentatonicJapanese = 12,
-        Blues = 13,
+        PentatonicMajor = 6,
+        PentatonicMinor = 7,
+        PentatonicJapanese = 8,
+        Blues = 9,
     }
 }

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace KasJam.LD48.Unity.Behaviours.Music
 {
+    using System.Collections.Generic;
+
     public class Song
     {
         #region Constructors
@@ -9,16 +9,18 @@ namespace KasJam.LD48.Unity.Behaviours.Music
         public Song(int tempo)
         {
             Tempo = tempo;
-            Events = new List<SongEvent>();
+            Voices = new List<SongVoice>();
         }
 
         #endregion
 
         #region Members
 
-        public List<SongEvent> Events { get; protected set; }
+        public List<SongVoice> Voices { get; protected set; }
 
         public int Tempo { get; protected set; }
+
+        public float TotalTime { get; set; }
 
         #endregion
     }

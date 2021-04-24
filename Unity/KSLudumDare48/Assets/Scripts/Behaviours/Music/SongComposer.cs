@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace KasJam.LD48.Unity.Behaviours.Music
 {
     public class SongComposer
@@ -9,11 +11,12 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             return new MusicalNote(original.Name, original.Octave + octaveChange, timbre);
         }
 
-        protected void AddNoteToSong(Song song, float time, MusicalNote note, NoteTimbre timbre, int octaveChange)
+        protected void AddNoteToSong(Song song, float time, int voiceNumber, float volume, MusicalNote note, NoteTimbre timbre, int octaveChange)
         {
-            var songEvent = new SongEvent(time, CloneNote(note, timbre, octaveChange));
+            var songEvent = new SongEvent(time, voiceNumber, volume, CloneNote(note, timbre, octaveChange));
 
-            song
+            var voice = song.Voices[voiceNumber];
+            voice
                 .Events
                 .Add(songEvent);
         }
@@ -28,10 +31,21 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
             MusicalScale scale = new MusicalScale(root, mode, octave);
 
+            for (int i = 0; i < 10; i++)
+            {
+                song
+                    .Voices
+                    .Add(new SongVoice());
+            }
+
             float runningTime = 0;
             var notes = scale.AscendingNotes;
             int octaveChange = 0;
             var notesInScaleCount = notes.Length;
+
+            AddNoteToSong(song, 0, 1, 0.5f, notes[0], NoteTimbre.Oo, 0);
+            AddNoteToSong(song, 0, 2, 0.5f, notes[0], NoteTimbre.Oo, 0);
+            AddNoteToSong(song, 0, 3, 0.5f, notes[0], NoteTimbre.Oo, 0);
 
             for (int i = 0; i <= notesInScaleCount; i++)
             {
@@ -40,16 +54,18 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                     octaveChange = 1;
                 }
 
-                AddNoteToSong(song, runningTime, notes[i % notesInScaleCount], NoteTimbre.Ah, octaveChange);
-                runningTime += 0.5f;
+                AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, octaveChange);
+                runningTime += minNoteLength;
             }
 
             notes = scale.DescendingNotes;
             for (int i = notesInScaleCount - 1; i >= 0; i--)
             {
-                AddNoteToSong(song, runningTime, notes[i % notesInScaleCount], NoteTimbre.Ah, 0);
-                runningTime += 0.5f;
+                AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, 0);
+                runningTime += minNoteLength;
             }
+
+            song.TotalTime = runningTime;
 
             return song;
         }

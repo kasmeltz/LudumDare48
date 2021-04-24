@@ -18,8 +18,22 @@ namespace KasJam.LD48.Unity.Behaviours
         {
             SongComposer composer = new SongComposer();
 
+            int rootIndex = Random
+                .Range(0, MusicalScale.NoteOrder.Count);
+
+            string root = MusicalScale.NoteOrder[rootIndex];
+
+            int octave = Random
+                .Range(2, 5);
+
+            int modeIndex = Random
+                .Range(1, 10);
+
+            //var song = composer
+            //.ComposeSong(root, octave, (ScaleType)modeIndex, 1);
+
             var song = composer
-                .ComposeSong("D#", 2, ScaleType.Blues, 1);
+                .ComposeSong("C", 3, ScaleType.Major, 0.5f);
 
             SongPlayer
                 .SetSong(song);

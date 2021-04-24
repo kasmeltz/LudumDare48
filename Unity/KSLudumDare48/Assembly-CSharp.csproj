@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Behaviours\Music\SongEventEventArgs.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\SongVisualizerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\NoteTimbre.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongVoice.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

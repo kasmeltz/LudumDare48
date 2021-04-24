@@ -9,11 +9,9 @@ namespace KasJam.LD48.Unity.Behaviours.Music
     {
         #region Members
 
-        public AudioSource AudioSource;
+        public AudioSource[] AudioSources;
 
         public Song Song { get; protected set; }
-
-        public int CurrentSongEventIndex { get; protected set; }
 
         public float BeatCounter { get; protected set; }
 
@@ -172,7 +170,12 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             Song = song;
 
             BeatCounter = 0;
-            CurrentSongEventIndex = 0;
+
+            foreach(var voice in song.Voices)
+            {
+                voice.CurrentEventIndex = 0;
+            }
+
             IsPlaying = false;
         }
 
@@ -182,14 +185,12 @@ namespace KasJam.LD48.Unity.Behaviours.Music
         }
         public void StopPlaying()
         {
-            var source = AudioSource;
-
-            //foreach (AudioSource source in AudioSources)
-            //{
-            source.clip = null;
-            source
-                .Stop();
-            //}
+            foreach (AudioSource audioSource in AudioSources)
+            {
+                audioSource.clip = null;
+                audioSource
+                    .Stop();
+            }
 
             IsPlaying = false;
         }
@@ -209,8 +210,13 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             NoteClips["C3"] = note;
         }
 
-        protected void PlayNote(string noteName)//, int sourceIndex)
+        protected void PlayNote(int voiceNumber, float volume, string noteName)
         {
+            if (voiceNumber >= AudioSources.Length)
+            {
+                throw new ArgumentException($"You trying to play a note using voice number {voiceNumber + 1} but we only have {AudioSources.Length} dude!");
+            }
+
             float pitch = 1;
 
             AudioClip clip;
@@ -225,19 +231,16 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 pitch = NoteFrequencies[noteName] / NoteFrequencies["C3"];
             }
 
-            var source = AudioSource;
-            //var audioSource = AudioSources[sourceIndex];
+            var source = AudioSources[voiceNumber];
 
             source
                 .Stop();
             source.clip = null;
             source.pitch = pitch;
-
-            //source.pitch = pitch;
+            source.volume = volume;
             source.clip = clip;
-
             source
-                .PlayOneShot(clip, 1);
+                .Play();
         }
 
         protected void FinishSong()
@@ -249,10 +252,9 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         protected void HandleSongEvent(SongEvent songEvent)
         {
-            foreach (var note in songEvent.Notes)
-            {
-                PlayNote($"{note.Name}{note.Octave}");
-            }
+            var note = songEvent.Note;
+
+            PlayNote(songEvent.VoiceNumber,songEvent.Volume, $"{note.Name}{note.Octave}");
         }
 
         #endregion
@@ -281,33 +283,29 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 return;
             }
 
+            if (BeatCounter >= Song.TotalTime)
+            {
+                FinishSong();
+                return;
+            }
+
             BeatCounter += Time.deltaTime;
 
-            if (CurrentSongEventIndex < Song.Events.Count)
+            for (int voiceIndex = 0; voiceIndex < Song.Voices.Count; voiceIndex++)
             {
-                bool eventFound;
-                do
-                {
-                    eventFound = false;
+                var voice = Song.Voices[voiceIndex];
 
-                    var currentSongEvent = Song.Events[CurrentSongEventIndex];
+                if (voice.CurrentEventIndex < voice.Events.Count)
+                {
+                    var currentSongEvent = voice.Events[voice.CurrentEventIndex];
 
                     if (BeatCounter >= currentSongEvent.OccursAt)
                     {
-                        eventFound = true;
-
                         HandleSongEvent(currentSongEvent);
-
-                        CurrentSongEventIndex++;
-
-                        if (CurrentSongEventIndex >= Song.Events.Count)
-                        {
-                            FinishSong();
-                            break;
-                        }
+                        voice.CurrentEventIndex++;
                     }
-                } while (eventFound);
-            }
+                }
+            }                                   
         }
 
         #endregion
