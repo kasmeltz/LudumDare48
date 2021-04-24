@@ -10,6 +10,8 @@ namespace KasJam.LD48.Unity.Behaviours
 
         public SongPlayerBehaviour SongPlayer;
 
+        protected MusicalNote CurrentNote { get; set; }
+
         #endregion
 
         #region Protected Methods
@@ -33,7 +35,7 @@ namespace KasJam.LD48.Unity.Behaviours
             //.ComposeSong(root, octave, (ScaleType)modeIndex, 1);
 
             var song = composer
-                .ComposeSong("C", 3, ScaleType.Major, 1f);
+                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, ScaleType.Major, 0.25f);
 
             SongPlayer
                 .SetSong(song);
@@ -56,12 +58,25 @@ namespace KasJam.LD48.Unity.Behaviours
 
             SongPlayer.SongFinished += SongPlayer_SongFinished;
 
+            CurrentNote = new MusicalNote("C", 4, NoteTimbre.Ah);
+
             MakeSong();
         }
 
         private void SongPlayer_SongFinished(object sender, System.EventArgs e)
         {
-            DoAfter(2, () =>
+            var octave = CurrentNote.Octave;
+            var index = MusicalScale.NoteOrder.IndexOf(CurrentNote.Name);
+            index--;
+            if (index < 0)
+            {
+                index += 12;
+                octave--;
+            }
+            var newPitch = MusicalScale.NoteOrder[index];
+            CurrentNote = new MusicalNote(newPitch, octave, NoteTimbre.Ah);
+
+            DoAfter(1, () =>
             {
                 MakeSong();
             });

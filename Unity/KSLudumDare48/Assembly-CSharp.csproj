@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Behaviours\Music\SongVisualizerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\NoteTimbre.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\SongVoice.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\ChordType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
