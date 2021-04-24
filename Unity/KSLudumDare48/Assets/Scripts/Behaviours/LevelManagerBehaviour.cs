@@ -33,7 +33,7 @@ namespace KasJam.LD48.Unity.Behaviours
             //.ComposeSong(root, octave, (ScaleType)modeIndex, 1);
 
             var song = composer
-                .ComposeSong("C", 3, ScaleType.Major, 0.5f);
+                .ComposeSong("C", 3, ScaleType.Major, 1f);
 
             SongPlayer
                 .SetSong(song);

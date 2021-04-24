@@ -12,6 +12,12 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             Volume = volume;
         }
 
+        public SongEvent(float occursAt, int voiceNumber)
+        {
+            OccursAt = occursAt;
+            VoiceNumber = voiceNumber;
+        }
+
         #endregion
 
         #region Members

@@ -243,6 +243,20 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 .Play();
         }
 
+        protected void PlayRest(int voiceNumber)
+        {
+            if (voiceNumber >= AudioSources.Length)
+            {
+                throw new ArgumentException($"You trying to play a note using voice number {voiceNumber + 1} but we only have {AudioSources.Length} dude!");
+            }
+
+            var source = AudioSources[voiceNumber];
+
+            source
+                .Stop();
+            source.clip = null;
+        }
+
         protected void FinishSong()
         {
             IsPlaying = false;
@@ -254,7 +268,14 @@ namespace KasJam.LD48.Unity.Behaviours.Music
         {
             var note = songEvent.Note;
 
-            PlayNote(songEvent.VoiceNumber,songEvent.Volume, $"{note.Name}{note.Octave}");
+            if (note != null)
+            {
+                PlayNote(songEvent.VoiceNumber, songEvent.Volume, $"{note.Name}{note.Octave}");
+            }
+            else
+            {
+                PlayRest(songEvent.VoiceNumber);
+            }
         }
 
         #endregion

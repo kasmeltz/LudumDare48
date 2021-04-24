@@ -14,7 +14,15 @@ namespace KasJam.LD48.Unity.Behaviours.Music
         protected void AddNoteToSong(Song song, float time, int voiceNumber, float volume, MusicalNote note, NoteTimbre timbre, int octaveChange)
         {
             var songEvent = new SongEvent(time, voiceNumber, volume, CloneNote(note, timbre, octaveChange));
+            var voice = song.Voices[voiceNumber];
+            voice
+                .Events
+                .Add(songEvent);
+        }
 
+        protected void StopNote(Song song, float time, int voiceNumber)
+        {
+            var songEvent = new SongEvent(time, voiceNumber);
             var voice = song.Voices[voiceNumber];
             voice
                 .Events
@@ -44,8 +52,8 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             var notesInScaleCount = notes.Length;
 
             AddNoteToSong(song, 0, 1, 0.5f, notes[0], NoteTimbre.Oo, 0);
-            AddNoteToSong(song, 0, 2, 0.5f, notes[0], NoteTimbre.Oo, 0);
-            AddNoteToSong(song, 0, 3, 0.5f, notes[0], NoteTimbre.Oo, 0);
+            AddNoteToSong(song, 0, 2, 0.5f, notes[2], NoteTimbre.Oo, 0);
+            AddNoteToSong(song, 0, 3, 0.5f, notes[4], NoteTimbre.Oo, 0);
 
             for (int i = 0; i <= notesInScaleCount; i++)
             {
@@ -55,7 +63,8 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 }
 
                 AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, octaveChange);
-                runningTime += minNoteLength;
+                StopNote(song, runningTime + minNoteLength / 2, 0);
+                runningTime += minNoteLength;                
             }
 
             notes = scale.DescendingNotes;
