@@ -9,6 +9,15 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             return new MusicalNote(original.Name, original.Octave + octaveChange, original.ScaleDegree);
         }
 
+        protected void AddNoteToSong(Song song, float time, MusicalNote note, int octaveChange)
+        {
+            var songEvent = new SongEvent(time, CloneNote(note, octaveChange));
+
+            song
+                .Events
+                .Add(songEvent);
+        }
+
         #endregion
 
         #region Public Methods
@@ -19,8 +28,8 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
             MusicalScale scale = new MusicalScale(root, mode, octave);
 
+            float runningTime = 0;
             var notes = scale.AscendingNotes;
-
             int octaveChange = 0;
             for (int i = 0; i < 8; i++)
             {
@@ -29,12 +38,15 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                     octaveChange = 1;
                 }
 
-                float time = i / 2f;
-                var songEvent = new SongEvent(time, CloneNote(notes[i % 7], octaveChange));
+                AddNoteToSong(song, runningTime, notes[i % 7], octaveChange);
+                runningTime += 0.5f;
+            }
 
-                song
-                    .Events
-                    .Add(songEvent);
+            notes = scale.DescendingNotes;
+            for (int i = 6; i >= 0; i--)
+            {
+                AddNoteToSong(song, runningTime, notes[i % 7], 0);
+                runningTime += 0.5f;
             }
 
             return song;
