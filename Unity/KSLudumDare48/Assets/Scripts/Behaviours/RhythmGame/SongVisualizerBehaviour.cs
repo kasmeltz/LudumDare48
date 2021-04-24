@@ -14,6 +14,8 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
         protected List<KeyboardKeyBehaviour> KeyboardKeys { get; set; }
 
+        protected List<KeyboardKeyBehaviour> ToDestroy { get; set; }
+
         public Sprite[] KeyboardSprites { get; set; }
 
         protected LevelManagerBehaviour LevelManager { get; set; }
@@ -24,6 +26,19 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
         private void LevelManager_SongStarted(object sender, System.EventArgs e)
         {
+            foreach(var keyboardKey in KeyboardKeys)
+            {
+                if (keyboardKey == null)
+                {
+                    continue;
+                }
+
+                Destroy(keyboardKey);
+            }
+
+            KeyboardKeys
+                .Clear();
+
             var button = Instantiate(Prefab);
             button.Image.sprite = KeyboardSprites[0];
 
@@ -31,7 +46,10 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
                 .transform
                 .SetParent(ScrollingPanel);
 
-            button.Image.rectTransform.anchoredPosition = new Vector2(500, 0);
+            button.Image.rectTransform.anchoredPosition = new Vector2(1200, 0);
+
+            KeyboardKeys
+                .Add(button);
         }
 
         #endregion
@@ -43,12 +61,43 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             base
                 .Awake();
 
+            KeyboardKeys = new List<KeyboardKeyBehaviour>();
+            ToDestroy = new List<KeyboardKeyBehaviour>();
+
             KeyboardSprites = Resources
                 .LoadAll<Sprite>("Images/UI/keyboardButtons");
 
             LevelManager = FindObjectOfType<LevelManagerBehaviour>();
 
             LevelManager.SongStarted += LevelManager_SongStarted;
+        }
+        protected void Update()
+        {
+            ToDestroy
+                .Clear();
+
+            foreach (var keyboardKey in KeyboardKeys)
+            {
+                var pos = keyboardKey.Image.rectTransform.anchoredPosition;
+
+                pos.x -= 400 * Time.deltaTime;
+
+                keyboardKey.Image.rectTransform.anchoredPosition = pos;
+
+                if (pos.x <= -1200)
+                {
+                    ToDestroy
+                        .Add(keyboardKey);
+                }
+            }
+
+            foreach(var keyboardKey in ToDestroy)
+            {
+                KeyboardKeys
+                    .Remove(keyboardKey);
+
+                Destroy(keyboardKey);
+            }
         }
 
         #endregion
