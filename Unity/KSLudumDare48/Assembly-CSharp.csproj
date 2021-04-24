@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Behaviours\BehaviourBase.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\SongGenerator.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongComposer.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\MusicalScale.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\MusicalChord.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\Song.cs" />
@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scripts\Behaviours\Music\SongEvent.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\MusicalNote.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\ScaleType.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\LevelManagerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongEventEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

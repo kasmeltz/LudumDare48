@@ -1,22 +1,24 @@
+using System.Collections.Generic;
+
 namespace KasJam.LD48.Unity.Behaviours.Music
 {
-    public class SongEvent
+    public class Song
     {
         #region Constructors
 
-        public SongEvent(int occursAt, params MusicalNote[] notes)
+        public Song(int tempo)
         {
-            OccursAt = occursAt;
-            Notes = notes;
+            Tempo = tempo;
+            Events = new List<SongEvent>();
         }
 
         #endregion
 
         #region Members
 
-        public MusicalNote[] Notes { get; protected set; }
+        public List<SongEvent> Events { get; protected set; }
 
-        public float OccursAt { get; protected set; }
+        public int Tempo { get; protected set; }
 
         #endregion
     }

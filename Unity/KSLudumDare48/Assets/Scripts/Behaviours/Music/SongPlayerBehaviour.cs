@@ -1,5 +1,6 @@
 namespace KasJam.LD48.Unity.Behaviours.Music
 {
+    using System;
     using System.Collections.Generic;
     using UnityEngine;
 
@@ -10,15 +11,17 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         public AudioSource AudioSource;
 
-        protected Dictionary<string, AudioClip> NoteClips { get; set; }
-
         public Song Song { get; protected set; }
 
-        public int CurrentSongEvent { get; protected set; }
+        public int CurrentSongEventIndex { get; protected set; }
 
-        public float BeatCounter { get; protected set;  }
+        public float BeatCounter { get; protected set; }
 
-        protected Dictionary<string, float> NoteFrequencies = new Dictionary<string, float>
+        protected Dictionary<string, AudioClip> NoteClips { get; set; }
+
+        protected bool IsPlaying { get; set; }
+
+        public static Dictionary<string, float> NoteFrequencies = new Dictionary<string, float>
         {
             ["C0"] = 16.35f,
             ["C#0"] = 17.32f,
@@ -140,6 +143,26 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         #endregion
 
+        #region Events
+
+        public event EventHandler SongFinished;
+
+        protected void OnSongFinished()
+        {
+            SongFinished?
+                .Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler<SongEventEventArgs> SongEventPlayed;
+
+        protected void OnSongEventPlayed(SongEvent songEvent)
+        {
+            SongEventPlayed?
+                .Invoke(this, new SongEventEventArgs { SongEvent = songEvent });
+        }
+
+        #endregion
+
         #region Public Methods
 
         public void SetSong(Song song)
@@ -149,19 +172,32 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             Song = song;
 
             BeatCounter = 0;
-            CurrentSongEvent = 0;
+            CurrentSongEventIndex = 0;
+            IsPlaying = false;
         }
+
+        public void StartPlaying()
+        {
+            IsPlaying = true;
+        }
+        public void StopPlaying()
+        {
+            var source = AudioSource;
+
+            //foreach (AudioSource source in AudioSources)
+            //{
+            source.clip = null;
+            source
+                .Stop();
+            //}
+
+            IsPlaying = false;
+        }
+
 
         #endregion
 
         #region Protected Methods
-
-        protected void StopPlaying()
-        {
-            AudioSource.clip = null;
-            AudioSource
-                .Stop();
-        }
 
         protected void LoadNotes()
         {
@@ -173,7 +209,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             NoteClips["C3"] = note;
         }
 
-        protected void PlayNote(string noteName)
+        protected void PlayNote(string noteName)//, int sourceIndex)
         {
             float pitch = 1;
 
@@ -186,20 +222,37 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             else
             {
                 clip = NoteClips["C3"];
-
                 pitch = NoteFrequencies[noteName] / NoteFrequencies["C3"];
             }
 
-            AudioSource
+            var source = AudioSource;
+            //var audioSource = AudioSources[sourceIndex];
+
+            source
                 .Stop();
+            source.clip = null;
+            source.pitch = pitch;
 
-            AudioSource.clip = null;
-            AudioSource.pitch = pitch;
-            AudioSource.clip = clip;
+            //source.pitch = pitch;
+            source.clip = clip;
 
-            AudioSource
-                .Play();
+            source
+                .PlayOneShot(clip, 1);
+        }
 
+        protected void FinishSong()
+        {
+            IsPlaying = false;
+
+            OnSongFinished();
+        }
+
+        protected void HandleSongEvent(SongEvent songEvent)
+        {
+            foreach (var note in songEvent.Notes)
+            {
+                PlayNote($"{note.Name}{note.Octave}");
+            }
         }
 
         #endregion
@@ -218,13 +271,42 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         protected void Update()
         {
+            if (Song == null)
+            {
+                return;
+            }
+
+            if (!IsPlaying)
+            {
+                return;
+            }
+
             BeatCounter += Time.deltaTime;
 
-            if (BeatCounter >= 1)
+            if (CurrentSongEventIndex < Song.Events.Count)
             {
-                BeatCounter -= 1;
+                bool eventFound = false;
+                do
+                {
+                    eventFound = false;
 
-                PlayNote("C3");
+                    var currentSongEvent = Song.Events[CurrentSongEventIndex];
+
+                    if (BeatCounter >= currentSongEvent.OccursAt)
+                    {
+                        eventFound = true;
+
+                        HandleSongEvent(currentSongEvent);
+
+                        CurrentSongEventIndex++;
+
+                        if (CurrentSongEventIndex >= Song.Events.Count)
+                        {
+                            FinishSong();
+                            break;
+                        }
+                    }
+                } while (eventFound);
             }
         }
 
