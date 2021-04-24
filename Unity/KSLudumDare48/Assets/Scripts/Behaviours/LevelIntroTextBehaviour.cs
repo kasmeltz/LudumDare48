@@ -65,6 +65,8 @@ namespace KasJam.LD48.Unity.Behaviours
             LevelManager = FindObjectOfType<LevelManagerBehaviour>();
 
             LevelManager.LevelStarted += LevelManager_LevelStarted;
+
+            Text.text = "";
         }
 
         #endregion
