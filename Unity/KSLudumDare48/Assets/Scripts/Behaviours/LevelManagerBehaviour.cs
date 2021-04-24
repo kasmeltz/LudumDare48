@@ -1,6 +1,7 @@
 namespace KasJam.LD48.Unity.Behaviours
 {
     using KasJam.LD48.Unity.Behaviours.Music;
+    using System;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -27,30 +28,34 @@ namespace KasJam.LD48.Unity.Behaviours
 
         protected int LevelNumber { get; set; }
 
+        public Song CurrentSong { get; protected set; }
+
+        public bool IsFanfare { get; protected set; }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler SongStarted;
+
+        protected void OnSongStarted()
+        {
+            SongStarted?
+                .Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
 
         #region Protected Methods
-   
-        protected void MakeSong()
+
+        protected void StartLevel()
         {
             SongComposer composer = new SongComposer();
 
-            int rootIndex = Random
-                .Range(0, MusicalScale.NoteOrder.Count);
-
-            string root = MusicalScale.NoteOrder[rootIndex];
-
-            int octave = Random
-                .Range(2, 5);
-
-            int modeIndex = Random
-                .Range(1, 10);
-
-            //var song = composer
-            //.ComposeSong(root, octave, (ScaleType)modeIndex, 1);
+            IsFanfare = true;
 
             var song = composer
-                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, ScaleType.Major, 0.02f);
+                .ComposeFanfare(CurrentNote.Name, CurrentNote.Octave);
 
             SongPlayer
                 .SetSong(song);
@@ -59,6 +64,32 @@ namespace KasJam.LD48.Unity.Behaviours
                 .StartPlaying();
 
             UpdateUI();
+        }
+
+        protected void MakeSong()
+        {
+            SongComposer composer = new SongComposer();
+
+            IsFanfare = false;
+
+            int modeIndex = UnityEngine
+                    .Random
+                    .Range(1, 10);
+
+            float shortestNote = UnityEngine
+                .Random
+                .Range(0.25f, 1f);
+
+            CurrentSong = composer
+                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, shortestNote);
+
+            SongPlayer
+                .SetSong(CurrentSong);
+
+            SongPlayer
+                .StartPlaying();
+
+            OnSongStarted();
         }
 
         protected void UpdateUI()
@@ -103,11 +134,17 @@ namespace KasJam.LD48.Unity.Behaviours
 
             CurrentNote = new MusicalNote("C", 5, NoteTimbre.Ah);
 
-            MakeSong();
+            StartLevel();
         }
 
         private void SongPlayer_SongFinished(object sender, System.EventArgs e)
         {
+            if (IsFanfare)
+            {
+                MakeSong();
+                return;
+            }
+
             LevelNumber++;
 
             var octave = CurrentNote.Octave;
@@ -123,23 +160,9 @@ namespace KasJam.LD48.Unity.Behaviours
 
             DoAfter(1, () =>
             {
-                MakeSong();
+                StartLevel();
             });
         }
-
-        /*
-        protected void Update()
-        {
-            BeatCounter += Time.deltaTime;
-
-            if (BeatCounter >= 1)
-            {
-                BeatCounter -= 1;
-
-                PlayNote("C3");
-            }
-        }
-        */
 
         #endregion
     }

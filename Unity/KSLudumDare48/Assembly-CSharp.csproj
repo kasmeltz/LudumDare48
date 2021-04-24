@@ -67,10 +67,11 @@
     <Compile Include="Assets\Scripts\Behaviours\Music\ScaleType.cs" />
     <Compile Include="Assets\Scripts\Behaviours\LevelManagerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\SongEventEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\SongVisualizerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\NoteTimbre.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\SongVoice.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\ChordType.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\SongVisualizerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\KeyboardKeyBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

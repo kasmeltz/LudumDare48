@@ -6,9 +6,9 @@ namespace KasJam.LD48.Unity.Behaviours.Music
     {
         #region Constructors
 
-        public Song(int tempo)
+        public Song(int noteLengthMin)
         {
-            Tempo = tempo;
+            NoteLengthMin = noteLengthMin;
             Voices = new List<SongVoice>();
         }
 
@@ -18,7 +18,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         public List<SongVoice> Voices { get; protected set; }
 
-        public int Tempo { get; protected set; }
+        public float NoteLengthMin { get; protected set; }
 
         public float TotalTime { get; set; }
 

@@ -27,15 +27,9 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 .Add(songEvent);
         }
 
-        #endregion
-
-        #region Public Methods
-
-        public Song ComposeSong(string root, int octave, ScaleType mode, float minNoteLength)
+        protected Song CreateSong()
         {
             var song = new Song(100);
-
-            MusicalScale scale = new MusicalScale(root, mode, octave);
 
             for (int i = 0; i < 10; i++)
             {
@@ -44,14 +38,45 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                     .Add(new SongVoice());
             }
 
+            return song;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public Song ComposeFanfare(string root, int octave)
+        {
+            var song = CreateSong();
+
+            MusicalScale scale = new MusicalScale(root, ScaleType.Major, octave);
+
+            var notes = scale.AscendingNotes;
+
+            AddNoteToSong(song, 0, 1, 0.75f, notes[0], NoteTimbre.Oo, 0);
+            AddNoteToSong(song, 0, 2, 0.75f, notes[2], NoteTimbre.Oo, 0);
+            AddNoteToSong(song, 0, 3, 0.75f, notes[4], NoteTimbre.Oo, 0);
+            AddNoteToSong(song, 0, 4, 0.75f, notes[0], NoteTimbre.Oo, 1);
+
+            song.TotalTime = 3;
+
+            return song;
+        }
+
+        public Song ComposeSong(string root, int octave, ScaleType mode, float minNoteLength)
+        {
+            var song = CreateSong();
+
+            MusicalScale scale = new MusicalScale(root, mode, octave);
+
             float runningTime = 0;
             var notes = scale.AscendingNotes;
             int octaveChange = 0;
             var notesInScaleCount = notes.Length;
 
-            AddNoteToSong(song, 0, 1, 0.5f, notes[0], NoteTimbre.Oo, 0);
-            AddNoteToSong(song, 0, 2, 0.5f, notes[2], NoteTimbre.Oo, 0);
-            AddNoteToSong(song, 0, 3, 0.5f, notes[4], NoteTimbre.Oo, 0);
+            //AddNoteToSong(song, 0, 1, 0.5f, notes[0], NoteTimbre.Oo, 0);
+            //AddNoteToSong(song, 0, 2, 0.5f, notes[2], NoteTimbre.Oo, 0);
+            //AddNoteToSong(song, 0, 3, 0.5f, notes[4], NoteTimbre.Oo, 0);
 
             for (int i = 0; i <= notesInScaleCount; i++)
             {
