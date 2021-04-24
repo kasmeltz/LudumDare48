@@ -9,6 +9,8 @@ namespace KasJam.LD48.Unity.Behaviours
     {
         #region Members
 
+        public Image Background;
+
         public SongPlayerBehaviour SongPlayer;
 
         public Text LevelNameText;
@@ -19,12 +21,16 @@ namespace KasJam.LD48.Unity.Behaviours
 
         public Color EndColor;
 
+        public Sprite[] BackgroundSprites { get; set; }
+
         protected MusicalNote CurrentNote { get; set; }
+
+        protected int LevelNumber { get; set; }
 
         #endregion
 
         #region Protected Methods
-
+   
         protected void MakeSong()
         {
             SongComposer composer = new SongComposer();
@@ -44,7 +50,7 @@ namespace KasJam.LD48.Unity.Behaviours
             //.ComposeSong(root, octave, (ScaleType)modeIndex, 1);
 
             var song = composer
-                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, ScaleType.Major, 0.125f);
+                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, ScaleType.Major, 0.02f);
 
             SongPlayer
                 .SetSong(song);
@@ -57,12 +63,12 @@ namespace KasJam.LD48.Unity.Behaviours
 
         protected void UpdateUI()
         {
-            LevelNameText.text = $"{CurrentNote.Name}{CurrentNote.Octave}";
+            LevelNameText.text = $"{CurrentNote.Name} {CurrentNote.Octave}";
 
             int noteStep = MusicalScale
                 .GetNoteAbsoluteIndex(CurrentNote.Name, MaxOctave, CurrentNote.Octave);
 
-            int anchorY = -(noteStep * 20);
+            int anchorY = -(noteStep * 18) - 30;
             var rt = LevelNameText
                 .GetComponent<RectTransform>();
             var pos = rt.anchoredPosition;
@@ -73,6 +79,8 @@ namespace KasJam.LD48.Unity.Behaviours
 
             LevelNameText.color = Color
                 .Lerp(StartColor, EndColor, ratio);
+
+            Background.sprite = BackgroundSprites[LevelNumber];
         }
 
         #endregion
@@ -84,17 +92,24 @@ namespace KasJam.LD48.Unity.Behaviours
             base
                 .Awake();
 
+            LevelNumber = 0;
+
+            BackgroundSprites = Resources
+                .LoadAll<Sprite>("Images/UI/beachsunset");
+
             SongComposer composer = new SongComposer();
 
             SongPlayer.SongFinished += SongPlayer_SongFinished;
 
-            CurrentNote = new MusicalNote("C", MaxOctave, NoteTimbre.Ah);
+            CurrentNote = new MusicalNote("C", 5, NoteTimbre.Ah);
 
             MakeSong();
         }
 
         private void SongPlayer_SongFinished(object sender, System.EventArgs e)
         {
+            LevelNumber++;
+
             var octave = CurrentNote.Octave;
             var index = MusicalScale.NoteOrder.IndexOf(CurrentNote.Name);
             index--;
