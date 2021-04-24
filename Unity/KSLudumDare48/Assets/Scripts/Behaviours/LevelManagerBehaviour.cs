@@ -2,6 +2,7 @@ namespace KasJam.LD48.Unity.Behaviours
 {
     using KasJam.LD48.Unity.Behaviours.Music;
     using UnityEngine;
+    using UnityEngine.UI;
 
     [AddComponentMenu("LD48/LevelManager")]
     public class LevelManagerBehaviour : BehaviourBase
@@ -9,6 +10,14 @@ namespace KasJam.LD48.Unity.Behaviours
         #region Members
 
         public SongPlayerBehaviour SongPlayer;
+
+        public Text LevelNameText;
+
+        public int MaxOctave;
+
+        public Color StartColor;
+
+        public Color EndColor;
 
         protected MusicalNote CurrentNote { get; set; }
 
@@ -35,7 +44,7 @@ namespace KasJam.LD48.Unity.Behaviours
             //.ComposeSong(root, octave, (ScaleType)modeIndex, 1);
 
             var song = composer
-                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, ScaleType.Major, 0.25f);
+                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, ScaleType.Major, 0.125f);
 
             SongPlayer
                 .SetSong(song);
@@ -43,6 +52,27 @@ namespace KasJam.LD48.Unity.Behaviours
             SongPlayer
                 .StartPlaying();
 
+            UpdateUI();
+        }
+
+        protected void UpdateUI()
+        {
+            LevelNameText.text = $"{CurrentNote.Name}{CurrentNote.Octave}";
+
+            int noteStep = MusicalScale
+                .GetNoteAbsoluteIndex(CurrentNote.Name, MaxOctave, CurrentNote.Octave);
+
+            int anchorY = -(noteStep * 20);
+            var rt = LevelNameText
+                .GetComponent<RectTransform>();
+            var pos = rt.anchoredPosition;
+            pos.y = anchorY;
+            rt.anchoredPosition = pos;
+
+            float ratio = (noteStep / 60f);
+
+            LevelNameText.color = Color
+                .Lerp(StartColor, EndColor, ratio);
         }
 
         #endregion
@@ -58,7 +88,7 @@ namespace KasJam.LD48.Unity.Behaviours
 
             SongPlayer.SongFinished += SongPlayer_SongFinished;
 
-            CurrentNote = new MusicalNote("C", 4, NoteTimbre.Ah);
+            CurrentNote = new MusicalNote("C", MaxOctave, NoteTimbre.Ah);
 
             MakeSong();
         }

@@ -78,6 +78,21 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         #endregion
 
+        #region Static Methods
+
+        public static int GetNoteAbsoluteIndex(string name, int octaveMax, int octave)
+        {
+            int noteStep = 0;
+            int octaveDifference = (octaveMax - octave);
+            noteStep += octaveDifference * 12;
+            noteStep -= NoteOrder
+                .IndexOf(name);
+
+            return noteStep;
+        }
+
+        #endregion
+
         #region Protected Methods
 
         protected void BuildScale(string root, int octave)
