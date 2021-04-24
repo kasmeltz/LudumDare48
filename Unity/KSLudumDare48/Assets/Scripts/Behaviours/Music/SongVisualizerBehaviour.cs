@@ -4,8 +4,8 @@ namespace KasJam.LD48.Unity.Behaviours.Music
     using System.Collections.Generic;
     using UnityEngine;
 
-    [AddComponentMenu("LD48/SongPlayer")]
-    public class SongPlayerBehaviour : BehaviourBase
+    [AddComponentMenu("LD48/SongVisualizer")]
+    public class SongVisualizerBehaviour : BehaviourBase
     {
         #region Members
 

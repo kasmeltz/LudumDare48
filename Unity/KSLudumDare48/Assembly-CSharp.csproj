@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Behaviours\Music\ScaleType.cs" />
     <Compile Include="Assets\Scripts\Behaviours\LevelManagerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\SongEventEventArgs.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongVisualizerBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -21,8 +21,10 @@ namespace KasJam.LD48.Unity.Behaviours
 
             SongComposer composer = new SongComposer();
 
+            SongPlayer.SongFinished += SongPlayer_SongFinished;
+
             var song = composer
-                .ComposeSong("C", ScaleType.Major, 1);
+                .ComposeSong("D#", 2, ScaleType.Major, 1);
 
             SongPlayer
                 .SetSong(song);
@@ -30,7 +32,24 @@ namespace KasJam.LD48.Unity.Behaviours
             SongPlayer
                 .StartPlaying();
         }
-        
+
+        private void SongPlayer_SongFinished(object sender, System.EventArgs e)
+        {
+            DoAfter(2, () =>
+            {
+                SongComposer composer = new SongComposer();
+
+                var song = composer
+                    .ComposeSong("E", 2, ScaleType.Major, 1);
+
+                SongPlayer
+                    .SetSong(song);
+
+                SongPlayer
+                    .StartPlaying();
+            });
+        }
+
         /*
         protected void Update()
         {

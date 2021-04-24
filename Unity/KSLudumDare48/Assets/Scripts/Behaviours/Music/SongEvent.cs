@@ -4,7 +4,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
     {
         #region Constructors
 
-        public SongEvent(int occursAt, params MusicalNote[] notes)
+        public SongEvent(float occursAt, params MusicalNote[] notes)
         {
             OccursAt = occursAt;
             Notes = notes;
