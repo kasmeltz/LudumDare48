@@ -25,6 +25,10 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
         public Text ScoreText;
 
+        public float BaseMoveSpeed;
+
+        public float MoveSpeedPerLevel;
+
         protected List<KeyboardKeyBehaviour> KeyboardKeys { get; set; }
 
         protected List<KeyboardKeyBehaviour> ToDestroy { get; set; }
@@ -37,7 +41,7 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
         protected SongPlayerBehaviour SongPlayer { get; set; }
 
-        protected int TotalSpawns { get; set; }
+        protected int BadKeyPresses { get; set; }
 
         protected int GoodKeyPresses { get; set; }
 
@@ -94,10 +98,11 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             {
                 IsCheckingForOver = false;
 
-                bool wasSuccessful = (float)GoodKeyPresses / (float)TotalSpawns >= 0.8f;
+                int totalKeyPresses = GoodKeyPresses + BadKeyPresses;
+                bool wasSuccessful = (float)GoodKeyPresses / (float)totalKeyPresses >= 0.8f;
 
                 RoundOverPanel
-                    .Open(wasSuccessful, GoodKeyPresses, TotalSpawns);
+                    .Open(wasSuccessful, GoodKeyPresses, totalKeyPresses);
 
                 if (wasSuccessful)
                 {
@@ -134,7 +139,8 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             
             IsCheckingForOver = false;
             SpawnX = 1200;
-            TotalSpawns = 0;
+            BadKeyPresses = 0;
+            GoodKeyPresses = 0;
         }
 
         protected void ActivateButton(KeyboardKeyBehaviour button, bool wasSuccessful)
@@ -155,12 +161,14 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
                 GoodKeyPresses++;
 
-                Score += LevelManager.LevelNumber * 10;
+                Score += (LevelManager.LevelNumber + 1) * 10;
 
                 ScoreText.text = $"Score: {Score}";
             }
             else
             {
+                BadKeyPresses++;
+
                 Incorrect
                     .gameObject
                     .SetActive(true);
@@ -189,8 +197,6 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             button.SpriteIndex = spriteIndex;
             button.HasBeenActivated = false;
             button.KeyCode = KeyCodes[i];
-
-            TotalSpawns++;
         }
 
         #endregion
@@ -232,11 +238,15 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
             if (key == null)
             {
+                BadKeyPresses++;
+
                 return;
             }
 
             if (key.KeyCode != keyCode)
             {
+                BadKeyPresses++;
+
                 return;
             }
 
@@ -301,9 +311,8 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
             CheckInput();
 
-            float moveSpeed = 400 + (LevelManager.LevelNumber * 25);
+            float moveSpeed = BaseMoveSpeed + (LevelManager.LevelNumber * MoveSpeedPerLevel);
             moveSpeed *= Time.deltaTime;
-            //moveSpeed /= 8.0f;
 
             SpawnX -= moveSpeed;
             if (SpawnX <= 1200)
