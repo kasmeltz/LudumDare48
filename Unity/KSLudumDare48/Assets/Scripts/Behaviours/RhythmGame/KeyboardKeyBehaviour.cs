@@ -10,6 +10,12 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
         public Image Image;
 
+        public int SpriteIndex { get; set; }
+
+        public bool HasBeenActivated { get; set; }
+
+        public KeyCode KeyCode { get; set; }
+
         #endregion
 
         #region Unity 

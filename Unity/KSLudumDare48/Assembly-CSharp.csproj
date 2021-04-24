@@ -75,6 +75,9 @@
     <Compile Include="Assets\Scripts\Behaviours\LevelIntroTextBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\ChangeSceneOnKeyPressBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\ExitOnKeyPressBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\CorrectKeyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\RoundOverPanelBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\ChangeSceneBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

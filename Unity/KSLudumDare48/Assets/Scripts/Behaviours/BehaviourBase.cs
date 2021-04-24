@@ -6,6 +6,12 @@ namespace KasJam.LD48.Unity.Behaviours
 
     public class BehaviourBase : MonoBehaviour
     {
+        #region Animation Callbacks
+
+        public virtual void AnimationFinished(int value) { }
+
+        #endregion
+
         #region Protected Methods
 
         protected Coroutine DoAfter(float seconds, Action toPerform)

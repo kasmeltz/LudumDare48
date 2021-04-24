@@ -59,6 +59,9 @@ TextureImporter:
   - first:
       213: -2701789675415047178
     second: keyboardButtons_18
+  - first:
+      213: 408716185134293161
+    second: keyboardButtons_19
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -554,6 +557,27 @@ TextureImporter:
       bones: []
       spriteID: 6f3711bda90518ad0800000000000000
       internalID: -2701789675415047178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: keyboardButtons_19
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a0e1e4743d0ca500800000000000000
+      internalID: 408716185134293161
       vertices: []
       indices: 
       edges: []

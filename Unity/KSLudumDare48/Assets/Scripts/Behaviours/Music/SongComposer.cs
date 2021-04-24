@@ -74,27 +74,28 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             int octaveChange = 0;
             var notesInScaleCount = notes.Length;
 
-            //AddNoteToSong(song, 0, 1, 0.5f, notes[0], NoteTimbre.Oo, 0);
-            //AddNoteToSong(song, 0, 2, 0.5f, notes[2], NoteTimbre.Oo, 0);
-            //AddNoteToSong(song, 0, 3, 0.5f, notes[4], NoteTimbre.Oo, 0);
-
-            for (int i = 0; i <= notesInScaleCount; i++)
+            for (int j = 0; j < 3; j++)
             {
-                if (i >= notesInScaleCount)
+                for (int i = 0; i <= notesInScaleCount; i++)
                 {
-                    octaveChange = 1;
+                    if (i >= notesInScaleCount)
+                    {
+                        octaveChange = 1;
+                    }
+
+                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, octaveChange);
+                    StopNote(song, runningTime + minNoteLength / 2, 0);
+                    runningTime += minNoteLength;
                 }
 
-                AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, octaveChange);
-                StopNote(song, runningTime + minNoteLength / 2, 0);
-                runningTime += minNoteLength;                
-            }
+                notes = scale.DescendingNotes;
+                for (int i = notesInScaleCount - 1; i >= 0; i--)
+                {
+                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, 0);
+                    runningTime += minNoteLength;
+                }
 
-            notes = scale.DescendingNotes;
-            for (int i = notesInScaleCount - 1; i >= 0; i--)
-            {
-                AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, 0);
-                runningTime += minNoteLength;
+                runningTime += minNoteLength * 4;
             }
 
             song.TotalTime = runningTime;

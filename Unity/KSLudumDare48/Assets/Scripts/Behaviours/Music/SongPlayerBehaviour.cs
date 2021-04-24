@@ -183,6 +183,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             if (songEvent.Note != null)
             {
                 PlayNote(songEvent.VoiceNumber, songEvent.Volume, songEvent.Note);
+                OnSongEventPlayed(songEvent);
             }
             else
             {

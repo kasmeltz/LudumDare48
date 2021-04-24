@@ -32,6 +32,8 @@ namespace KasJam.LD48.Unity.Behaviours
 
         public bool IsFanfare { get; protected set; }
 
+        public float ShortestNote { get; protected set; }
+
         #endregion
 
         #region Events
@@ -50,6 +52,28 @@ namespace KasJam.LD48.Unity.Behaviours
         {
             LevelStarted?
                 .Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void AdvanceLevel()
+        {
+            LevelNumber++;
+
+            var octave = CurrentNote.Octave;
+            var index = MusicalScale.NoteOrder.IndexOf(CurrentNote.Name);
+            index--;
+            if (index < 0)
+            {
+                index += 12;
+                octave--;
+            }
+            var newPitch = MusicalScale.NoteOrder[index];
+            CurrentNote = new MusicalNote(newPitch, octave, NoteTimbre.Ah);
+
+            StartLevel();
         }
 
         #endregion
@@ -86,10 +110,12 @@ namespace KasJam.LD48.Unity.Behaviours
                     .Random
                     .Range(1, 10);
 
-            float shortestNote = 0.5f - (LevelNumber * 0.008f);
+            ShortestNote = 0.5f - (LevelNumber * 0.008f);
 
             CurrentSong = composer
-                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, shortestNote);
+                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, ShortestNote);
+
+            CurrentSong.TotalTime += 1;
 
             SongPlayer
                 .SetSong(CurrentSong);
@@ -135,24 +161,6 @@ namespace KasJam.LD48.Unity.Behaviours
                 MakeSong();
                 return;
             }
-
-            LevelNumber++;
-
-            var octave = CurrentNote.Octave;
-            var index = MusicalScale.NoteOrder.IndexOf(CurrentNote.Name);
-            index--;
-            if (index < 0)
-            {
-                index += 12;
-                octave--;
-            }
-            var newPitch = MusicalScale.NoteOrder[index];
-            CurrentNote = new MusicalNote(newPitch, octave, NoteTimbre.Ah);
-
-            DoAfter(1, () =>
-            {
-                StartLevel();
-            });
         }
 
         #endregion
