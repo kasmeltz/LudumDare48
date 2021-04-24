@@ -83,7 +83,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                         octaveChange = 1;
                     }
 
-                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, octaveChange);
+                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ee, octaveChange);
                     StopNote(song, runningTime + minNoteLength / 2, 0);
                     runningTime += minNoteLength;
                 }
