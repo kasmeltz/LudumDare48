@@ -24,7 +24,14 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
         private void LevelManager_SongStarted(object sender, System.EventArgs e)
         {
+            var button = Instantiate(Prefab);
+            button.Image.sprite = KeyboardSprites[0];
 
+            button
+                .transform
+                .SetParent(ScrollingPanel);
+
+            button.Image.rectTransform.anchoredPosition = new Vector2(500, 0);
         }
 
         #endregion

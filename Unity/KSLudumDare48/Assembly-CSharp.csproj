@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Behaviours\Music\ChordType.cs" />
     <Compile Include="Assets\Scripts\Behaviours\RhythmGame\SongVisualizerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\RhythmGame\KeyboardKeyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\LevelIntroTextBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

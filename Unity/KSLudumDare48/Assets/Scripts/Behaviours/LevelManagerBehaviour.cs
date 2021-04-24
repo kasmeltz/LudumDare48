@@ -24,9 +24,9 @@ namespace KasJam.LD48.Unity.Behaviours
 
         public Sprite[] BackgroundSprites { get; set; }
 
-        protected MusicalNote CurrentNote { get; set; }
+        public MusicalNote CurrentNote { get; set; }
 
-        protected int LevelNumber { get; set; }
+        public int LevelNumber { get; protected set; }
 
         public Song CurrentSong { get; protected set; }
 
@@ -41,6 +41,14 @@ namespace KasJam.LD48.Unity.Behaviours
         protected void OnSongStarted()
         {
             SongStarted?
+                .Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler LevelStarted;
+
+        protected void OnLevelStarted()
+        {
+            LevelStarted?
                 .Invoke(this, EventArgs.Empty);
         }
 
@@ -64,6 +72,8 @@ namespace KasJam.LD48.Unity.Behaviours
                 .StartPlaying();
 
             UpdateUI();
+
+            OnLevelStarted();
         }
 
         protected void MakeSong()
@@ -78,7 +88,7 @@ namespace KasJam.LD48.Unity.Behaviours
 
             float shortestNote = UnityEngine
                 .Random
-                .Range(0.25f, 1f);
+                .Range(0.125f, 0.5f);
 
             CurrentSong = composer
                 .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, shortestNote);
@@ -94,23 +104,6 @@ namespace KasJam.LD48.Unity.Behaviours
 
         protected void UpdateUI()
         {
-            LevelNameText.text = $"{CurrentNote.Name} {CurrentNote.Octave}";
-
-            int noteStep = MusicalScale
-                .GetNoteAbsoluteIndex(CurrentNote.Name, MaxOctave, CurrentNote.Octave);
-
-            int anchorY = -(noteStep * 18) - 30;
-            var rt = LevelNameText
-                .GetComponent<RectTransform>();
-            var pos = rt.anchoredPosition;
-            pos.y = anchorY;
-            rt.anchoredPosition = pos;
-
-            float ratio = (noteStep / 60f);
-
-            LevelNameText.color = Color
-                .Lerp(StartColor, EndColor, ratio);
-
             Background.sprite = BackgroundSprites[LevelNumber];
         }
 
