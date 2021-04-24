@@ -86,9 +86,7 @@ namespace KasJam.LD48.Unity.Behaviours
                     .Random
                     .Range(1, 10);
 
-            float shortestNote = UnityEngine
-                .Random
-                .Range(0.125f, 0.5f);
+            float shortestNote = 0.5f - (LevelNumber * 0.008f);
 
             CurrentSong = composer
                 .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, shortestNote);

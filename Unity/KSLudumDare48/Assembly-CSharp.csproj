@@ -73,6 +73,8 @@
     <Compile Include="Assets\Scripts\Behaviours\RhythmGame\SongVisualizerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\RhythmGame\KeyboardKeyBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\LevelIntroTextBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\ChangeSceneOnKeyPressBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\ExitOnKeyPressBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

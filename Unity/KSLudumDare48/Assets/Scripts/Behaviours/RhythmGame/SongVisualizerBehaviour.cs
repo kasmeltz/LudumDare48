@@ -76,11 +76,13 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             ToDestroy
                 .Clear();
 
+            var moveSpeed = 400 + (LevelManager.LevelNumber * 25);
+
             foreach (var keyboardKey in KeyboardKeys)
             {
                 var pos = keyboardKey.Image.rectTransform.anchoredPosition;
 
-                pos.x -= 400 * Time.deltaTime;
+                pos.x -= moveSpeed * Time.deltaTime;
 
                 keyboardKey.Image.rectTransform.anchoredPosition = pos;
 
