@@ -5,12 +5,18 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
     [AddComponentMenu("LD48/CorrectKey")]
     public class CorrectKeyBehaviour : BehaviourBase
     {
+        #region Members
+
+        public Animator Animator;
+
+        #endregion
+
         #region Animation Callbacks
 
         public override void AnimationFinished(int value)
         {
-            gameObject
-                .SetActive(false);
+            //gameObject
+                //.SetActive(false);
 
         }
 

@@ -29,6 +29,8 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
 
         public float MoveSpeedPerLevel;
 
+        public float SpawnTimer;
+
         protected List<KeyboardKeyBehaviour> KeyboardKeys { get; set; }
 
         protected List<KeyboardKeyBehaviour> ToDestroy { get; set; }
@@ -75,15 +77,18 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
                 return;
             }
 
+            if (SpawnTimer > 0)
+            {
+                return;
+            }
+
             if (e.SongEvent.OccursAt >= LevelManager.CurrentSong.TotalTime * 0.9f)
             {
                 return;
             }
 
-            if (Random.value >= 0.25f)
-            {
-                SpawnKey(e.SongEvent);
-            }
+            SpawnKey(e.SongEvent);
+            SpawnTimer = 0.25f;
         }
 
 
@@ -98,23 +103,26 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             {
                 IsCheckingForOver = false;
 
-                int totalKeyPresses = GoodKeyPresses + BadKeyPresses;
-                bool wasSuccessful = (float)GoodKeyPresses / (float)totalKeyPresses >= 0.8f;
-
-                RoundOverPanel
-                    .Open(wasSuccessful, GoodKeyPresses, totalKeyPresses);
-
-                if (wasSuccessful)
+                DoAfter(1, () =>
                 {
-                    DoAfter(3, () =>
-                    {
-                        RoundOverPanel
-                            .Close();
+                    int totalKeyPresses = GoodKeyPresses + BadKeyPresses;
+                    bool wasSuccessful = (float)GoodKeyPresses / (float)totalKeyPresses >= 0.75f;
 
-                        LevelManager
-                            .AdvanceLevel();
-                    });
-                }
+                    RoundOverPanel
+                        .Open(wasSuccessful, GoodKeyPresses, totalKeyPresses);
+
+                    if (wasSuccessful)
+                    {
+                        DoAfter(3, () =>
+                        {
+                            RoundOverPanel
+                                .Close();
+
+                            LevelManager
+                                .AdvanceLevel();
+                        });
+                    }
+                });
             }
         }
 
@@ -139,6 +147,7 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             
             IsCheckingForOver = false;
             SpawnX = 1200;
+            SpawnTimer = 0;
             BadKeyPresses = 0;
             GoodKeyPresses = 0;
         }
@@ -153,11 +162,11 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             button.HasBeenActivated = true;
             button.Image.sprite = KeyboardSprites[button.SpriteIndex + 1];
 
+            CorrectKeyBehaviour key = null;
+
             if (wasSuccessful)
             {
-                Correct
-                    .gameObject
-                    .SetActive(true);
+                key = Correct;
 
                 GoodKeyPresses++;
 
@@ -169,10 +178,16 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             {
                 BadKeyPresses++;
 
-                Incorrect
-                    .gameObject
-                    .SetActive(true);
+                key = Incorrect;
             }
+
+            key
+                .Animator
+                .ResetTrigger("ShowKey");
+
+            key
+                .Animator
+                .SetTrigger("ShowKey");
         }
 
         protected void SpawnKey(SongEvent songEvent)
@@ -231,8 +246,8 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             var key = KeyboardKeys
                 .Where(o =>
                     !o.HasBeenActivated &&
-                    o.Image.rectTransform.anchoredPosition.x >= 0 &&
-                    o.Image.rectTransform.anchoredPosition.x <= 200)
+                    o.Image.rectTransform.anchoredPosition.x >= -80 &&
+                    o.Image.rectTransform.anchoredPosition.x <= 80)
                 .OrderBy(o => o.Image.rectTransform.anchoredPosition.x)
                 .FirstOrDefault();
 
@@ -309,6 +324,15 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             ToDestroy
                 .Clear();
 
+            if (SpawnTimer > 0)
+            {
+                SpawnTimer -= Time.deltaTime;
+                if (SpawnTimer <= 0)
+                {
+                    SpawnTimer = 0;
+                }
+            }
+
             CheckInput();
 
             float moveSpeed = BaseMoveSpeed + (LevelManager.LevelNumber * MoveSpeedPerLevel);
@@ -318,22 +342,15 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             if (SpawnX <= 1200)
             {
                 SpawnX = 1200;
-            }
+            }           
 
             foreach (var keyboardKey in KeyboardKeys)
             {
-                bool isPositiveX = false;
-
                 var pos = keyboardKey.Image.rectTransform.anchoredPosition;
-
-                if (pos.x > 0)
-                {
-                    isPositiveX = true;
-                }
 
                 pos.x -= moveSpeed;
 
-                if (pos.x <= 0 && isPositiveX && !keyboardKey.HasBeenActivated)
+                if (pos.x <= -80 && !keyboardKey.HasBeenActivated)
                 {
                     ActivateButton(keyboardKey, false);
                 }

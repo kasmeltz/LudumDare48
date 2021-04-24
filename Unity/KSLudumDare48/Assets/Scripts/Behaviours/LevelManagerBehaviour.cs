@@ -10,6 +10,8 @@ namespace KasJam.LD48.Unity.Behaviours
     {
         #region Members
 
+        public Image WinGamePanel;
+
         public Image Background;
 
         public SongPlayerBehaviour SongPlayer;
@@ -58,9 +60,22 @@ namespace KasJam.LD48.Unity.Behaviours
 
         #region Public Methods
 
+        public void WinGame()
+        {
+            WinGamePanel
+                .gameObject
+                .SetActive(true);
+        }
+
         public void AdvanceLevel()
         {
             LevelNumber++;
+
+            if (LevelNumber >= 49)
+            {
+                WinGame();
+                return;
+            }
 
             var octave = CurrentNote.Octave;
             var index = MusicalScale.NoteOrder.IndexOf(CurrentNote.Name);
@@ -128,7 +143,10 @@ namespace KasJam.LD48.Unity.Behaviours
 
         protected void UpdateUI()
         {
-            Background.sprite = BackgroundSprites[LevelNumber];
+            if (LevelNumber < BackgroundSprites.Length)
+            {
+                Background.sprite = BackgroundSprites[LevelNumber];
+            }
         }
 
         #endregion
@@ -140,7 +158,7 @@ namespace KasJam.LD48.Unity.Behaviours
             base
                 .Awake();
 
-            LevelNumber = 0;
+            LevelNumber = 48;
 
             BackgroundSprites = Resources
                 .LoadAll<Sprite>("Images/UI/beachsunset");
