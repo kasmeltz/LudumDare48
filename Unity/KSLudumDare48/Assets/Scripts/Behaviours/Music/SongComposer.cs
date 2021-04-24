@@ -4,14 +4,14 @@ namespace KasJam.LD48.Unity.Behaviours.Music
     {
         #region Protected Methods
 
-        protected MusicalNote CloneNote(MusicalNote original, int octaveChange)
+        protected MusicalNote CloneNote(MusicalNote original, NoteTimbre timbre, int octaveChange)
         {
-            return new MusicalNote(original.Name, original.Octave + octaveChange, original.ScaleDegree);
+            return new MusicalNote(original.Name, original.Octave + octaveChange, timbre);
         }
 
-        protected void AddNoteToSong(Song song, float time, MusicalNote note, int octaveChange)
+        protected void AddNoteToSong(Song song, float time, MusicalNote note, NoteTimbre timbre, int octaveChange)
         {
-            var songEvent = new SongEvent(time, CloneNote(note, octaveChange));
+            var songEvent = new SongEvent(time, CloneNote(note, timbre, octaveChange));
 
             song
                 .Events
@@ -31,21 +31,23 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             float runningTime = 0;
             var notes = scale.AscendingNotes;
             int octaveChange = 0;
-            for (int i = 0; i < 8; i++)
+            var notesInScaleCount = notes.Length;
+
+            for (int i = 0; i <= notesInScaleCount; i++)
             {
-                if (i >= 7)
+                if (i >= notesInScaleCount)
                 {
                     octaveChange = 1;
                 }
 
-                AddNoteToSong(song, runningTime, notes[i % 7], octaveChange);
+                AddNoteToSong(song, runningTime, notes[i % notesInScaleCount], NoteTimbre.Ah, octaveChange);
                 runningTime += 0.5f;
             }
 
             notes = scale.DescendingNotes;
-            for (int i = 6; i >= 0; i--)
+            for (int i = notesInScaleCount - 1; i >= 0; i--)
             {
-                AddNoteToSong(song, runningTime, notes[i % 7], 0);
+                AddNoteToSong(song, runningTime, notes[i % notesInScaleCount], NoteTimbre.Ah, 0);
                 runningTime += 0.5f;
             }
 

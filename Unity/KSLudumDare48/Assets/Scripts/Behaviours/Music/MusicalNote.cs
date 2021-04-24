@@ -4,11 +4,11 @@ namespace KasJam.LD48.Unity.Behaviours.Music
     {
         #region Constructors
 
-        public MusicalNote(string name, int octave, int scaleDegree)
+        public MusicalNote(string name, int octave, NoteTimbre timbre)
         {
             Name = name;
             Octave = octave;
-            ScaleDegree = scaleDegree;
+            Timbre = timbre;
         }
 
         #endregion
@@ -19,7 +19,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         public int Octave { get; protected set; }
 
-        public int ScaleDegree{ get; protected set; }
+        public NoteTimbre Timbre { get; protected set; }
 
         #endregion
     }

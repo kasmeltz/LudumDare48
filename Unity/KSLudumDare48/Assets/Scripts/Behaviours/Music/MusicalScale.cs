@@ -32,6 +32,46 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             {
                 new List<int> { 0, 2, 4, 5, 7, 9, 11 },
                 new List<int> { 0, 2, 4, 5, 7, 9, 11 }
+            },
+            [ScaleType.NaturalMinor] = new List<int>[]
+            {
+                new List<int> { 0, 2, 3, 5, 7, 8, 10 },
+                new List<int> { 0, 2, 3, 5, 7, 8, 10 }
+            },
+            [ScaleType.HarmonicMinor] = new List<int>[]
+            {
+                new List<int> { 0, 2, 3, 5, 7, 8, 11 },
+                new List<int> { 0, 2, 3, 5, 7, 8, 11 }
+            },
+            [ScaleType.MelodicMinor] = new List<int>[]
+            {
+                new List<int> { 0, 2, 3, 5, 7, 9, 11 },
+                new List<int> { 0, 2, 3, 5, 7, 8, 10 }
+            },
+            [ScaleType.Dorian] = new List<int>[]
+            {
+                new List<int> { 0, 2, 3, 5, 7, 9, 10 },
+                new List<int> { 0, 2, 3, 5, 7, 9, 10 }
+            },
+            [ScaleType.Blues] = new List<int>[]
+            {
+                new List<int> { 0, 3, 5, 6, 7, 10 },
+                new List<int> { 0, 3, 5, 6, 7, 10 }
+            },
+            [ScaleType.PentatonicMajor] = new List<int>[]
+            {
+                new List<int> { 0, 2, 4, 7, 9 },
+                new List<int> { 0, 2, 4, 7, 9 }
+            },
+            [ScaleType.PentatonicMinor] = new List<int>[]
+            {
+                new List<int> { 0, 3, 5, 7, 10 },
+                new List<int> { 0, 3, 5, 7, 10 }
+            },
+            [ScaleType.PentatonicJapanese] = new List<int>[]
+            {
+                new List<int> { 0, 1, 5, 7, 8 },
+                new List<int> { 0, 1, 5, 7, 8 }
             }
         };
 
@@ -42,7 +82,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         protected void BuildScale(string root, int octave)
         {
-            Root = new MusicalNote(root, octave, 1);
+            Root = new MusicalNote(root, octave, NoteTimbre.Ah);
 
             int rootOctave = octave;
             int rootNoteIndex = NoteOrder
@@ -56,9 +96,24 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             switch (Mode)
             {
                 case ScaleType.Major:
+                case ScaleType.NaturalMinor:
+                case ScaleType.HarmonicMinor:
+                case ScaleType.MelodicMinor:
+                case ScaleType.Dorian:
                     AscendingNotes = new MusicalNote[7];
                     DescendingNotes = new MusicalNote[7];
                     break;
+                case ScaleType.Blues:
+                    AscendingNotes = new MusicalNote[6];
+                    DescendingNotes = new MusicalNote[6];
+                    break;
+                case ScaleType.PentatonicMajor:
+                case ScaleType.PentatonicMinor:
+                case ScaleType.PentatonicJapanese:
+                    AscendingNotes = new MusicalNote[5];
+                    DescendingNotes = new MusicalNote[5];
+                break;
+
             }
 
             var noteOffsets = NoteOffsets[Mode];
@@ -76,7 +131,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                     actualOctave++;
                 }
 
-                AscendingNotes[i] = new MusicalNote(NoteOrder[noteIndex], actualOctave, i);
+                AscendingNotes[i] = new MusicalNote(NoteOrder[noteIndex], actualOctave, NoteTimbre.Ah);
 
                 actualOctave = rootOctave;
                 noteIndex = rootNoteIndex + descending[i];
@@ -87,7 +142,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                     actualOctave++;
                 }
 
-                DescendingNotes[i] = new MusicalNote(NoteOrder[noteIndex], actualOctave, i);
+                DescendingNotes[i] = new MusicalNote(NoteOrder[noteIndex], actualOctave, NoteTimbre.Ah);
             }
         }
             

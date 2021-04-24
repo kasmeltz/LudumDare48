@@ -12,6 +12,25 @@ namespace KasJam.LD48.Unity.Behaviours
 
         #endregion
 
+        #region Protected Methods
+
+        protected void MakeSong()
+        {
+            SongComposer composer = new SongComposer();
+
+            var song = composer
+                .ComposeSong("D#", 2, ScaleType.Blues, 1);
+
+            SongPlayer
+                .SetSong(song);
+
+            SongPlayer
+                .StartPlaying();
+
+        }
+
+        #endregion
+
         #region Unity
 
         protected override void Awake()
@@ -23,30 +42,14 @@ namespace KasJam.LD48.Unity.Behaviours
 
             SongPlayer.SongFinished += SongPlayer_SongFinished;
 
-            var song = composer
-                .ComposeSong("D#", 2, ScaleType.Major, 1);
-
-            SongPlayer
-                .SetSong(song);
-
-            SongPlayer
-                .StartPlaying();
+            MakeSong();
         }
 
         private void SongPlayer_SongFinished(object sender, System.EventArgs e)
         {
             DoAfter(2, () =>
             {
-                SongComposer composer = new SongComposer();
-
-                var song = composer
-                    .ComposeSong("E", 2, ScaleType.Major, 1);
-
-                SongPlayer
-                    .SetSong(song);
-
-                SongPlayer
-                    .StartPlaying();
+                MakeSong();
             });
         }
 

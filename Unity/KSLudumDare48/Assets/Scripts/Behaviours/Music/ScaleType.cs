@@ -4,7 +4,13 @@ namespace KasJam.LD48.Unity.Behaviours.Music
     {
         None = 0,
         Major = 1,
-        Minor = 2,
-        Pentatonic = 3
+        NaturalMinor = 2,
+        HarmonicMinor = 3,
+        MelodicMinor = 4,
+        Dorian = 5,
+        PentatonicMajor = 10,
+        PentatonicMinor = 11,
+        PentatonicJapanese = 12,
+        Blues = 13,
     }
 }
