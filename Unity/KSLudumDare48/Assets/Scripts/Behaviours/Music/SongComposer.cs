@@ -101,7 +101,6 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         public Song ComposeSong(string root, int octave, float minNoteLength)
         {
-            // TODO - CHANGE FOR TESTING
             ProbabilityChooser<ScaleType> chooser = new ProbabilityChooser<ScaleType>();
 
             chooser

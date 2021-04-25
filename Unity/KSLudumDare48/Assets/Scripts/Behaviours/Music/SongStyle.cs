@@ -118,45 +118,6 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 .SortEvents();
 
             Song.TotalTime = RunningTime;
-
-
-            /*
-            float runningTime = 0;
-
-            for (int j = 0; j < 2; j++)
-            {
-                var notes = scale.AscendingNotes;
-                int octaveChange = 0;
-                var notesInScaleCount = notes.Length;
-
-                for (int i = 0; i <= notesInScaleCount; i++)
-                {
-                    if (i >= notesInScaleCount)
-                    {
-                        octaveChange = 1;
-                    }
-
-                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ee, octaveChange);
-                    //StopNote(song, runningTime + minNoteLength / 2, 0);
-                    runningTime += minNoteLength;
-                }
-
-                notes = scale.DescendingNotes;
-                for (int i = notesInScaleCount - 1; i >= 0; i--)
-                {
-                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, 0);
-                    runningTime += minNoteLength;
-                }
-
-                runningTime += minNoteLength * 4;
-            }
-
-            // TODO - CHANGE FOR TESTING
-            //song.TotalTime = runningTime / 2;
-            song.TotalTime = runningTime;
-
-            return song;
-            */
         }
 
         public void DoChunk(int index)

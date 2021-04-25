@@ -104,7 +104,6 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
                 IsCheckingForOver = false;
 
                 // TODO - CHANGE FOR TESTING
-                /*
                 DoAfter(1, () =>
                 {
                     int totalKeyPresses = GoodKeyPresses + BadKeyPresses;
@@ -125,10 +124,9 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
                         });
                     }
                 });
-                */
                 
-                LevelManager
-                    .AdvanceLevel();
+                //LevelManager
+                  //  .AdvanceLevel();
             }
         }
 
