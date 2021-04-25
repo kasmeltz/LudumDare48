@@ -56,28 +56,30 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Behaviours\BehaviourBase.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\SongComposer.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\LevelIntroTextBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\ChangeSceneBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\MusicalScale.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\MusicalChord.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\Song.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\SongPlayerBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\SongEvent.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\MusicalNote.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\ScaleType.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\LevelManagerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\SongEventEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\NoteTimbre.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\Music\SongVoice.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Music\ChordType.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\SongVisualizerBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\KeyboardKeyBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\LevelIntroTextBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\ChangeSceneOnKeyPressBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\ExitOnKeyPressBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\LevelManagerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\ChangeSceneOnKeyPressBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongComposer.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\MusicalNote.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\NoteTimbre.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\ScaleType.cs" />
     <Compile Include="Assets\Scripts\Behaviours\RhythmGame\CorrectKeyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\BehaviourBase.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongEvent.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\KeyboardKeyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongPlayerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\Song.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\RhythmGame\SongVisualizerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongVoice.cs" />
     <Compile Include="Assets\Scripts\Behaviours\RhythmGame\RoundOverPanelBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Behaviours\ChangeSceneBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\ProbabilityChooser.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\SunlightPanelBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -58,7 +58,9 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             AddNoteToSong(song, 0, 3, 0.75f, notes[4], NoteTimbre.Oo, 0);
             AddNoteToSong(song, 0, 4, 0.75f, notes[0], NoteTimbre.Oo, 1);
 
-            song.TotalTime = 3;
+            // TODO - CHANGE FOR TESTING
+            song.TotalTime = 0.5f;
+            //song.TotalTime = 3f;
 
             return song;
         }
@@ -98,7 +100,8 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 runningTime += minNoteLength * 4;
             //}
 
-            song.TotalTime = runningTime;
+            // TODO - CHANGE FOR TESTING
+            song.TotalTime = runningTime / 2;
 
             return song;
         }

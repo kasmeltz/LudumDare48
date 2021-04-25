@@ -136,7 +136,9 @@ namespace KasJam.LD48.Unity.Behaviours
                     .Random
                     .Range(1, 10);
 
-            ShortestNote = 0.5f - (LevelNumber * 0.005f);
+            // TODO - CHANGE FOR TESTING
+            //ShortestNote = 0.0625f;
+            ShortestNote = 0.5f - (LevelNumber * 0.0035f);
 
             CurrentSong = composer
                 .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, ShortestNote);
@@ -170,6 +172,42 @@ namespace KasJam.LD48.Unity.Behaviours
         {
             base
                 .Awake();
+
+
+            /*
+            var chooser = new ProbabilityChooser<int>();
+            chooser.AddItem(0, 0.1f);
+            chooser.AddItem(1, 0.2f);
+            chooser.AddItem(2, 0.3f);
+            chooser.AddItem(3, 0.4f);
+
+            int[] chosens = new int[4];
+
+            for(int i = 0;i < 10000;i++)
+            {
+                int chosen = chooser
+                    .ChooseItem();
+
+                chosens[chosen]++;
+            }
+
+
+            Debug
+                .Log($"0 had probability of 0.1 and was chosen {chosens[0]} times");
+
+
+            Debug
+                .Log($"1 had probability of 0.2 and was chosen {chosens[1]} times");
+
+
+            Debug
+                .Log($"2 had probability of 0.3 and was chosen {chosens[2]} times");
+
+
+            Debug
+                .Log($"3 had probability of 0.4 and was chosen {chosens[3]} times");
+            */
+
 
             LevelNumber = 0;
 
