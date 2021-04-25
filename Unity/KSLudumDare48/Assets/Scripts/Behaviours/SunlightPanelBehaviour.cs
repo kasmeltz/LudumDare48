@@ -17,17 +17,7 @@ namespace KasJam.LD48.Unity.Behaviours
         protected Color32[] SunlightColors { get; set; }
 
         #endregion
-
-        #region Public Methods
-
-        public void ChangeScene(string sceneName)
-        {
-            SceneManager
-                .LoadSceneAsync(sceneName);
-        }
-
-        #endregion
-
+        
         #region Event Handlers
 
         private void LevelManager_LevelStarted(object sender, System.EventArgs e)
