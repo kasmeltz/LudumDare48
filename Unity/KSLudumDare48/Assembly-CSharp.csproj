@@ -81,6 +81,9 @@
     <Compile Include="Assets\Scripts\Behaviours\ProbabilityChooser.cs" />
     <Compile Include="Assets\Scripts\Behaviours\SunlightPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\BodyPartCallOutBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\TitleScreenBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\SongStyle.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Music\BassMelodicStyle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

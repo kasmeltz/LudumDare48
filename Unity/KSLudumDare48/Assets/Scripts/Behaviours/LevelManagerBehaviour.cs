@@ -132,16 +132,12 @@ namespace KasJam.LD48.Unity.Behaviours
 
             IsFanfare = false;
 
-            int modeIndex = UnityEngine
-                    .Random
-                    .Range(1, 10);
-
             // TODO - CHANGE FOR TESTING
-            //ShortestNote = 0.0625f;
+            // ShortestNote = 0.0625f;
             ShortestNote = 0.5f - (LevelNumber * 0.0035f);
 
             CurrentSong = composer
-                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, ShortestNote);
+                .ComposeSong(CurrentNote.Name, CurrentNote.Octave, ShortestNote);
 
             CurrentSong.TotalTime += 1;
 
@@ -218,7 +214,7 @@ namespace KasJam.LD48.Unity.Behaviours
 
             SongPlayer.SongFinished += SongPlayer_SongFinished;
 
-            CurrentNote = new MusicalNote("C", 5, NoteTimbre.Ah);
+            CurrentNote = new MusicalNote("C", 4, NoteTimbre.Ah);
 
             SetSingerState(false);
 

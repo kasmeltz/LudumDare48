@@ -2,34 +2,11 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 {
     public class SongComposer
     {
-        #region Protected Methods
+        #region Protected Methods           
 
-        protected MusicalNote CloneNote(MusicalNote original, NoteTimbre timbre, int octaveChange)
+        protected Song CreateSong(float minNoteLengt)
         {
-            return new MusicalNote(original.Name, original.Octave + octaveChange, timbre);
-        }
-
-        protected void AddNoteToSong(Song song, float time, int voiceNumber, float volume, MusicalNote note, NoteTimbre timbre, int octaveChange)
-        {
-            var songEvent = new SongEvent(time, voiceNumber, volume, CloneNote(note, timbre, octaveChange));
-            var voice = song.Voices[voiceNumber];
-            voice
-                .Events
-                .Add(songEvent);
-        }
-
-        protected void StopNote(Song song, float time, int voiceNumber)
-        {
-            var songEvent = new SongEvent(time, voiceNumber);
-            var voice = song.Voices[voiceNumber];
-            voice
-                .Events
-                .Add(songEvent);
-        }
-
-        protected Song CreateSong()
-        {
-            var song = new Song(100);
+            var song = new Song(minNoteLengt);
 
             for (int i = 0; i < 10; i++)
             {
@@ -45,67 +22,97 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 
         #region Public Methods
 
+        public void AddNoteToSong(Song song, float time, int voiceNumber, float volume, MusicalNote note, NoteTimbre timbre, int octaveChange)
+        {
+            var songEvent = new SongEvent(time, voiceNumber, volume, note
+                .Clone(timbre, octaveChange));
+
+            var voice = song.Voices[voiceNumber];
+            voice
+                .Events
+                .Add(songEvent);
+        }
+
+        public void StopNote(Song song, float time, int voiceNumber)
+        {
+            var songEvent = new SongEvent(time, voiceNumber);
+            var voice = song.Voices[voiceNumber];
+            voice
+                .Events
+                .Add(songEvent);
+        }
+
         public Song ComposeFanfare(string root, int octave)
         {
-            var song = CreateSong();
+            var song = CreateSong(0.25f);
 
             MusicalScale scale = new MusicalScale(root, ScaleType.Major, octave);
 
             var notes = scale.AscendingNotes;
 
-            AddNoteToSong(song, 0, 1, 0.75f, notes[0], NoteTimbre.Oo, 0);
-            AddNoteToSong(song, 0, 2, 0.75f, notes[2], NoteTimbre.Oo, 0);
-            AddNoteToSong(song, 0, 3, 0.75f, notes[4], NoteTimbre.Oo, 0);
-            AddNoteToSong(song, 0, 4, 0.75f, notes[0], NoteTimbre.Oo, 1);
+            float runningTime = 0;
 
-            // TODO - CHANGE FOR TESTING
-            song.TotalTime = 0.5f;
-            //song.TotalTime = 3f;
+            AddNoteToSong(song, runningTime, 1, 0.5f, notes[5], NoteTimbre.Oh, -1);
+            AddNoteToSong(song, runningTime, 2, 0.5f, notes[4], NoteTimbre.Oh, 0);
+            AddNoteToSong(song, runningTime, 3, 0.5f, notes[0], NoteTimbre.Oh, 0);
+            AddNoteToSong(song, runningTime, 4, 0.75f, notes[3], NoteTimbre.Ee, 0);
+
+            runningTime += 0.75f;
+
+            AddNoteToSong(song, runningTime, 1, 0.5f, notes[1], NoteTimbre.Ee, 0);
+            AddNoteToSong(song, runningTime, 2, 0.5f, notes[0], NoteTimbre.Ee, 0);
+            AddNoteToSong(song, runningTime, 3, 0.5f, notes[5], NoteTimbre.Ee, 0);
+            AddNoteToSong(song, runningTime, 4, 0.75f, notes[4], NoteTimbre.Ee, 0);
+
+            runningTime += 0.75f;
+
+            AddNoteToSong(song, runningTime, 1, 0.5f, notes[4], NoteTimbre.Oh, -1);
+            AddNoteToSong(song, runningTime, 2, 0.5f, notes[6], NoteTimbre.Oh, -1);
+            AddNoteToSong(song, runningTime, 3, 0.5f, notes[3], NoteTimbre.Oh, 0);
+            AddNoteToSong(song, runningTime, 4, 0.75f, notes[1], NoteTimbre.Ee, 0);
+
+            runningTime += 0.75f;
+
+            AddNoteToSong(song, runningTime, 1, 0.5f, notes[0], NoteTimbre.Ee, 0);
+            AddNoteToSong(song, runningTime, 2, 0.5f, notes[2], NoteTimbre.Ee, 0);
+            AddNoteToSong(song, runningTime, 3, 0.5f, notes[4], NoteTimbre.Ee, 0);
+            AddNoteToSong(song, runningTime, 4, 0.75f, notes[2], NoteTimbre.Ee, 0);
+
+            runningTime += 0.75f;
+
+            song.TotalTime = runningTime + 2f;
 
             return song;
         }
 
         public Song ComposeSong(string root, int octave, ScaleType mode, float minNoteLength)
         {
-            var song = CreateSong();
+            var song = CreateSong(minNoteLength);
 
             MusicalScale scale = new MusicalScale(root, mode, octave);
+            
+            SongStyle songStyle = new SongStyle(this, song, scale, minNoteLength);
 
-            float runningTime = 0;
-            var notes = scale.AscendingNotes;
-            int octaveChange = 0;
-            var notesInScaleCount = notes.Length;
+            songStyle
+                .Compose();
 
-            //for (int j = 0; j < 3; j++)
-            //{
-                for (int i = 0; i <= notesInScaleCount; i++)
-                {
-                    if (i >= notesInScaleCount)
-                    {
-                        octaveChange = 1;
-                    }
-
-                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ee, octaveChange);
-                    StopNote(song, runningTime + minNoteLength / 2, 0);
-                    runningTime += minNoteLength;
-                }
-
-                notes = scale.DescendingNotes;
-                for (int i = notesInScaleCount - 1; i >= 0; i--)
-                {
-                    AddNoteToSong(song, runningTime, 0, 0.75f, notes[i % notesInScaleCount], NoteTimbre.Ah, 0);
-                    runningTime += minNoteLength;
-                }
-
-                runningTime += minNoteLength * 4;
-            //}
-
-            // TODO - CHANGE FOR TESTING
-            song.TotalTime = runningTime / 2;
-
-            return song;
+            return song;            
         }
-    
+
+        public Song ComposeSong(string root, int octave, float minNoteLength)
+        {
+            // TODO - CHANGE FOR TESTING
+            ProbabilityChooser<ScaleType> chooser = new ProbabilityChooser<ScaleType>();
+
+            chooser.AddItem(ScaleType.Major, 1f);
+            chooser.AddItem(ScaleType.NaturalMinor, 1f);
+
+            var mode = chooser
+                .ChooseItem();
+
+            return ComposeSong(root, octave, mode, minNoteLength);
+        }
+
         #endregion
     }
 }

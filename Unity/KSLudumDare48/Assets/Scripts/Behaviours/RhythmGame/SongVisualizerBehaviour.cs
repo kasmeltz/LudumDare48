@@ -126,7 +126,7 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
                     }
                 });
                 */
-
+                
                 LevelManager
                     .AdvanceLevel();
             }
@@ -375,8 +375,9 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             CheckInput();
 
             // TODO - CHANGE FOR TESTING
-            float moveSpeed = BaseMoveSpeed + (LevelManager.LevelNumber * MoveSpeedPerLevel);
             //float moveSpeed = BaseMoveSpeed + 800;
+
+            float moveSpeed = BaseMoveSpeed + (LevelManager.LevelNumber * MoveSpeedPerLevel);            
             moveSpeed *= Time.deltaTime;
 
             SpawnX -= moveSpeed;

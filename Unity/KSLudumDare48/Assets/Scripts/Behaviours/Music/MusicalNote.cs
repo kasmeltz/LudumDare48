@@ -22,5 +22,24 @@ namespace KasJam.LD48.Unity.Behaviours.Music
         public NoteTimbre Timbre { get; protected set; }
 
         #endregion
+
+        #region Public Methods
+
+        public MusicalNote Clone(NoteTimbre timbre, int octaveChange)
+        {
+            return new MusicalNote(Name, Octave + octaveChange, timbre);
+        }
+
+        public MusicalNote Clone(NoteTimbre timbre)
+        {
+            return new MusicalNote(Name, Octave, timbre);
+        }
+
+        public MusicalNote Clone(int octaveChange)
+        {
+            return new MusicalNote(Name, Octave + octaveChange, Timbre);
+        }
+
+        #endregion
     }
 }
