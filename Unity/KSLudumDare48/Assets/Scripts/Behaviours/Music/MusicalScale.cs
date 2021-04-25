@@ -2,6 +2,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class MusicalScale
     {
@@ -89,6 +90,25 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 .IndexOf(name);
 
             return noteStep;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public int GetDegree(string noteName)
+        {
+            var note = AscendingNotes
+                .Where(o => o.Name == noteName)
+                .FirstOrDefault();
+
+            if (note == null)
+            {
+                throw new ArgumentException($"The note {noteName} doesn't exist in this scale!");
+            }
+
+            return Array
+                .IndexOf(AscendingNotes, note);
         }
 
         #endregion

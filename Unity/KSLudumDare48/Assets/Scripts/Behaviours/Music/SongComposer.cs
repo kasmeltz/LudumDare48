@@ -104,8 +104,14 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             // TODO - CHANGE FOR TESTING
             ProbabilityChooser<ScaleType> chooser = new ProbabilityChooser<ScaleType>();
 
-            chooser.AddItem(ScaleType.Major, 1f);
-            chooser.AddItem(ScaleType.NaturalMinor, 1f);
+            chooser
+                .AddItem(ScaleType.Major, 1f);
+
+            chooser
+                .AddItem(ScaleType.NaturalMinor, 1f);
+
+            chooser
+                .AddItem(ScaleType.Dorian, 1f);
 
             var mode = chooser
                 .ChooseItem();
