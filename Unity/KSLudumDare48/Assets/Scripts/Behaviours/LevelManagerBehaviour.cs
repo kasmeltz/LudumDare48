@@ -24,6 +24,8 @@ namespace KasJam.LD48.Unity.Behaviours
 
         public Color EndColor;
 
+        public Animator Singer;
+
         public Sprite[] BackgroundSprites { get; set; }
 
         public MusicalNote CurrentNote { get; set; }
@@ -71,7 +73,7 @@ namespace KasJam.LD48.Unity.Behaviours
         {
             LevelNumber++;
 
-            if (LevelNumber >= 49)
+            if (LevelNumber >= 59)
             {
                 WinGame();
                 return;
@@ -94,6 +96,15 @@ namespace KasJam.LD48.Unity.Behaviours
         #endregion
 
         #region Protected Methods
+
+        protected void SetSingerState(bool isSinging)
+        {
+            Singer
+                .SetBool("IsSinging", isSinging);
+
+            Singer
+                .SetBool("IsResting", !isSinging);
+        }
 
         protected void StartLevel()
         {
@@ -125,7 +136,7 @@ namespace KasJam.LD48.Unity.Behaviours
                     .Random
                     .Range(1, 10);
 
-            ShortestNote = 0.5f - (LevelNumber * 0.008f);
+            ShortestNote = 0.5f - (LevelNumber * 0.005f);
 
             CurrentSong = composer
                 .ComposeSong(CurrentNote.Name, CurrentNote.Octave, (ScaleType)modeIndex, ShortestNote);
@@ -137,6 +148,8 @@ namespace KasJam.LD48.Unity.Behaviours
 
             SongPlayer
                 .StartPlaying();
+
+            SetSingerState(true);
 
             OnSongStarted();
         }
@@ -169,6 +182,8 @@ namespace KasJam.LD48.Unity.Behaviours
 
             CurrentNote = new MusicalNote("C", 5, NoteTimbre.Ah);
 
+            SetSingerState(false);
+
             StartLevel();
         }
 
@@ -179,6 +194,8 @@ namespace KasJam.LD48.Unity.Behaviours
                 MakeSong();
                 return;
             }
+
+            SetSingerState(false);
         }
 
         #endregion

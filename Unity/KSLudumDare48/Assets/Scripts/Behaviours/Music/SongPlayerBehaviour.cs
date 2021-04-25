@@ -293,8 +293,8 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                     }
                 }
 
-                Debug
-                    .Log($"REQUESTED '{note.Name}{note.Octave}{note.Timbre}' ACTUAL {closest.Name}{closest.Octave}{closest.Timbre}");
+                //Debug
+                    //.Log($"REQUESTED '{note.Name}{note.Octave}{note.Timbre}' ACTUAL {closest.Name}{closest.Octave}{closest.Timbre}");
 
                 clip = NoteClips[$"{closest.Name}{closest.Octave}{note.Timbre}"];
                 pitch = CalculateFrequencyRatio(closest, note);
@@ -329,6 +329,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
         protected void FinishSong()
         {
             IsPlaying = false;
+            StopPlaying();
 
             OnSongFinished();
         }

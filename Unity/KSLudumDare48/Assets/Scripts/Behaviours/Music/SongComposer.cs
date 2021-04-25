@@ -74,8 +74,8 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             int octaveChange = 0;
             var notesInScaleCount = notes.Length;
 
-            for (int j = 0; j < 3; j++)
-            {
+            //for (int j = 0; j < 3; j++)
+            //{
                 for (int i = 0; i <= notesInScaleCount; i++)
                 {
                     if (i >= notesInScaleCount)
@@ -96,7 +96,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
                 }
 
                 runningTime += minNoteLength * 4;
-            }
+            //}
 
             song.TotalTime = runningTime;
 

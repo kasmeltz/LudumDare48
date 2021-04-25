@@ -5,6 +5,27 @@ TextureImporter:
   - first:
       213: -4635227265054338279
     second: singer_0
+  - first:
+      213: -6210678996475878574
+    second: singer_1
+  - first:
+      213: 9217884409065848346
+    second: singer_2
+  - first:
+      213: -8805647941287506602
+    second: singer_3
+  - first:
+      213: 7325802528141819188
+    second: singer_4
+  - first:
+      213: 150453202844949451
+    second: singer_5
+  - first:
+      213: 569090069783035189
+    second: singer_6
+  - first:
+      213: 1962938412612555802
+    second: singer_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -110,7 +131,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 256
         width: 128
         height: 128
       alignment: 0
@@ -122,6 +143,153 @@ TextureImporter:
       bones: []
       spriteID: 9131b356c5d5cafb0800000000000000
       internalID: -4635227265054338279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: singer_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2536319bb5c3fc9a0800000000000000
+      internalID: -6210678996475878574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: singer_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1e3bf618018cef70800000000000000
+      internalID: 9217884409065848346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: singer_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65d886a0add0cc580800000000000000
+      internalID: -8805647941287506602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: singer_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43d3d88e59a7aa560800000000000000
+      internalID: 7325802528141819188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: singer_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcb94ee0464861200800000000000000
+      internalID: 150453202844949451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: singer_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53dbe9e3760d5e700800000000000000
+      internalID: 569090069783035189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: singer_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a149dbf0612cd3b10800000000000000
+      internalID: 1962938412612555802
       vertices: []
       indices: 
       edges: []

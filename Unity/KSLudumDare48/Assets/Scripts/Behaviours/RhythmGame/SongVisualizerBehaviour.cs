@@ -206,7 +206,40 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
             float moveOver = 100 + ((50 - LevelManager.LevelNumber) * 2);
             SpawnX += moveOver;
 
-            int i = Random.Range(0, 8);
+            int maxNumber = 2;
+
+            if (LevelManager.LevelNumber >= 45)
+            {
+                maxNumber = 8;
+            
+            }
+            else if (LevelManager.LevelNumber >= 35)
+            {
+                maxNumber = 7;
+
+            }
+            else if (LevelManager.LevelNumber >= 25)
+            {
+                maxNumber = 6;
+
+            }
+            else if (LevelManager.LevelNumber >= 15)
+            {
+                maxNumber = 5;
+
+            }
+            else if (LevelManager.LevelNumber >= 8)
+            {
+                maxNumber = 4;
+
+            }
+            else if (LevelManager.LevelNumber >= 4)
+            {
+                maxNumber = 3;
+
+            }
+
+            int i = Random.Range(0, maxNumber);
             int spriteIndex = i * 2;
             button.Image.sprite = KeyboardSprites[spriteIndex];
             button.SpriteIndex = spriteIndex;

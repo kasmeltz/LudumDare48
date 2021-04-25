@@ -234,7 +234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 350}
+  m_AnchoredPosition: {x: -400, y: 250}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &47415975
@@ -343,7 +343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 350}
+  m_AnchoredPosition: {x: 400, y: 250}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &243141559
@@ -718,8 +718,9 @@ MonoBehaviour:
   SongPlayer: {fileID: 1402462293}
   LevelNameText: {fileID: 1135011275}
   MaxOctave: 5
-  StartColor: {r: 0, g: 1, b: 1, a: 1}
-  EndColor: {r: 1, g: 1, b: 0, a: 1}
+  StartColor: {r: 0.99877405, g: 1, b: 0.033018887, a: 1}
+  EndColor: {r: 0, g: 0.059918422, b: 0.4433962, a: 1}
+  Singer: {fileID: 998057626}
 --- !u!1 &382067989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,7 +1975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &885927618
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2138,6 +2139,7 @@ GameObject:
   - component: {fileID: 998057623}
   - component: {fileID: 998057625}
   - component: {fileID: 998057624}
+  - component: {fileID: 998057626}
   m_Layer: 5
   m_Name: Singer
   m_TagString: Untagged
@@ -2202,6 +2204,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 998057622}
   m_CullTransparentMesh: 1
+--- !u!95 &998057626
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998057622}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f42447ec4ff75724aa0039bf59a20d01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1032035610
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,7 +3165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1519421393
 RectTransform:
   m_ObjectHideFlags: 0
