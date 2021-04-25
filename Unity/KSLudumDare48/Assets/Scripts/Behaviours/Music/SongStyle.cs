@@ -174,9 +174,9 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             Song
                 .SortEvents();
 
-            Debug
-                .Log(sb
-                    .ToString());
+            //Debug
+                //.Log(sb
+                    //.ToString());
         }
 
         #endregion
