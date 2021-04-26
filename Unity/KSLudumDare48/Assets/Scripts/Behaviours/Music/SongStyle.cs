@@ -109,7 +109,7 @@ namespace KasJam.LD48.Unity.Behaviours.Music
             CreateChoosers();
 
             // MAKE FOUR EIGHT BAR CHUNKS
-            for (int chunkIndex = 0; chunkIndex < 4; chunkIndex++)
+            for (int chunkIndex = 0; chunkIndex < 2; chunkIndex++)
             {
                 DoChunk(chunkIndex);
             }

@@ -82,7 +82,7 @@ namespace KasJam.LD48.Unity.Behaviours.RhythmGame
                 return;
             }
 
-            if (e.SongEvent.OccursAt >= LevelManager.CurrentSong.TotalTime * 0.9f)
+            if (e.SongEvent.OccursAt >= LevelManager.CurrentSong.TotalTime * 0.96f)
             {
                 return;
             }
