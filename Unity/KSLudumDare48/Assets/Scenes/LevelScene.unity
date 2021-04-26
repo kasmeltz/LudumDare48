@@ -721,7 +721,7 @@ MonoBehaviour:
   StartColor: {r: 1, g: 1, b: 0, a: 1}
   EndColor: {r: 1, g: 1, b: 0, a: 1}
   Singer: {fileID: 998057626}
-  RoundOverPanel: {fileID: 0}
+  RoundOverPanel: {fileID: 1181626907}
 --- !u!1 &382067989
 GameObject:
   m_ObjectHideFlags: 0
