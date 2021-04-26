@@ -61,7 +61,7 @@ namespace KasJam.LD48.Unity.Behaviours
             "Hamstrings",
             "Knees",
             "Left Calf",
-            "Right Calves",
+            "Right Calf",
             "Left Ankle",
             "Right Ankle",
             "Left Foot",
