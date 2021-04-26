@@ -210,7 +210,7 @@ namespace KasJam.LD48.Unity.Behaviours
             */
 
 
-            LevelNumber = 20;
+            LevelNumber = 0;
 
             BackgroundSprites = Resources
                 .LoadAll<Sprite>("Images/UI/beachsunset");
