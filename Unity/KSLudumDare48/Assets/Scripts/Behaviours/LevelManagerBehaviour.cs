@@ -219,7 +219,7 @@ namespace KasJam.LD48.Unity.Behaviours
 
             SongPlayer.SongFinished += SongPlayer_SongFinished;
 
-            CurrentNote = new MusicalNote("C", 4, NoteTimbre.Ah);
+            CurrentNote = new MusicalNote("C", 5, NoteTimbre.Ah);
 
             SetSingerState(false);
 
