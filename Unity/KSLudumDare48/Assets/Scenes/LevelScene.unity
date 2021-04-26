@@ -721,6 +721,7 @@ MonoBehaviour:
   StartColor: {r: 1, g: 1, b: 0, a: 1}
   EndColor: {r: 1, g: 1, b: 0, a: 1}
   Singer: {fileID: 998057626}
+  RoundOverPanel: {fileID: 0}
 --- !u!1 &382067989
 GameObject:
   m_ObjectHideFlags: 0
@@ -3423,7 +3424,6 @@ GameObject:
   - component: {fileID: 1641087922}
   - component: {fileID: 1641087921}
   - component: {fileID: 1641087920}
-  - component: {fileID: 1641087923}
   m_Layer: 5
   m_Name: FailureButton
   m_TagString: Untagged
@@ -3495,11 +3495,11 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1641087923}
-        m_TargetAssemblyTypeName: KasJam.LD48.Unity.Behaviours.ChangeSceneBehaviour,
+      - m_Target: {fileID: 380664669}
+        m_TargetAssemblyTypeName: KasJam.LD48.Unity.Behaviours.LevelManagerBehaviour,
           Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 5
+        m_MethodName: StartLevel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3546,18 +3546,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641087918}
   m_CullTransparentMesh: 1
---- !u!114 &1641087923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641087918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 415181f891f02bd4080218a928669ea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1647216995
 GameObject:
   m_ObjectHideFlags: 0

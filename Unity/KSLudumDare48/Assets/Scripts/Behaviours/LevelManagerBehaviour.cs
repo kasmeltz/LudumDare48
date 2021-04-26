@@ -26,6 +26,8 @@ namespace KasJam.LD48.Unity.Behaviours
 
         public Animator Singer;
 
+        public GameObject RoundOverPanel;
+
         public Sprite[] BackgroundSprites { get; set; }
 
         public MusicalNote CurrentNote { get; set; }
@@ -106,8 +108,11 @@ namespace KasJam.LD48.Unity.Behaviours
                 .SetBool("IsResting", !isSinging);
         }
 
-        protected void StartLevel()
+        public void StartLevel()
         {
+            RoundOverPanel
+                .SetActive(false);
+
             SongComposer composer = new SongComposer();
 
             IsFanfare = true;
@@ -205,7 +210,7 @@ namespace KasJam.LD48.Unity.Behaviours
             */
 
 
-            LevelNumber = 0;
+            LevelNumber = 20;
 
             BackgroundSprites = Resources
                 .LoadAll<Sprite>("Images/UI/beachsunset");
